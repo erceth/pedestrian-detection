@@ -1,0 +1,22 @@
+{
+  "name": "pedestrian detection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pedestrian-detect.js",
+  "scripts": {
+    "test": "node test1.js",
+    "test2": "node test2.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@erceth/non-maximum-suppression": "^1.0.0",
+    "opencv4nodejs": "^5.5.0",
+    "request": "^2.88.2"
+  },
+  "opencv4nodejs": {
+    "disableAutoBuild": 1,
+    "opencvLibDir": "/Users/ericethington/pyimagsearch/opencv/build/lib",
+    "opencvBinDir": "/Users/ericethington/pyimagsearch/opencv/build/bin"
+  }
+}

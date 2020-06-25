@@ -1,0 +1,4 @@
+.vscode
+cam-config.json
+results/*
+!results/placeholder.txt

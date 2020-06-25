@@ -1,0 +1,8 @@
+{
+  "url": "http://192.168.1.8/axis-cgi/jpg/image.cgi",
+  "auth": {
+    "user": "admin",
+    "pass": "secret password",
+    "sendImmediately": false
+  }
+}
