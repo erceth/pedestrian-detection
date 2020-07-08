@@ -1,16 +1,17 @@
 {
   "name": "@erceth/pedestrian-detection",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "pedestrian detection using node.js",
   "main": "pedestrian-detect.js",
   "scripts": {
     "test": "node test1.js",
     "test2": "node test2.js"
   },
+  "keywords": ["pedestrian detection", "openCV", "opencv4nodejs"],
   "author": "Eric Ethington",
   "license": "ISC",
   "dependencies": {
-    "@erceth/non-maximum-suppression": "^1.0.0",
+    "@erceth/non-maximum-suppression": "^1.0.1",
     "opencv4nodejs": "^5.5.0"
   },
   "opencv4nodejs": {
@@ -19,5 +20,9 @@
   },
   "devDependencies": {
     "request": "^2.88.2"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/erceth/pedestrian-detection.git"
   }
 }

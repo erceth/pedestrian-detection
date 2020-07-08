@@ -24,6 +24,37 @@ This configuration tells opencv4nodejs to only include these openCV modules. By 
 
 If the opencv4nodejs auto build script does not work, perhaps a manual install of openCV would work better. See instructions [here](https://github.com/justadudewhohacks/opencv4nodejs#how-to-install).
 
+## passing options
+Pass options to `optionalInit` function once before calling `detect`.
+```
+const fullyLoadedOptions = {
+  rectColor: { // red, green, blue
+    r: 255,
+    g: 255,
+    b: 0
+  },
+  rectLineThickness: 2, // pixels,
+  rectLineType: require('opencv4nodejs').LINE_8,
+  outputFileType: '.jpg',
+  winStride: {
+    width: 4,
+    height: 4
+  },
+  padding: {
+    width: 8,
+    height: 8
+  },
+  scale: 1.05,
+  overlapThresh: .65,
+};
+
+pedestrianDetect.optionalInit(fullyLoadedOptions);
+...
+const result = pedestrianDetect.detect(image);
+...
+```
+See test2.js for a simple example of passing options.
+
 ## other
 Inspired by https://www.pyimagesearch.com/2015/11/09/pedestrian-detection-opencv/
 pedestrian-detect.js is based on pedestrian-detect.py
