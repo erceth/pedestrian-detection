@@ -22,6 +22,8 @@ let rectColor = new cv.Vec(0, 255, 0); // blue, green, red
 let rectLineThickness = 2;
 let rectLineType = cv.LINE_8;
 let outputFileType = '.jpg';
+let rectanglesOnly = false;
+let rectanglesOnlyBorder = [255, 0, 255]; // when bitwiseNot, this is green
 
 module.exports = {
   optionalInit: (opts) => {
@@ -34,6 +36,14 @@ module.exports = {
     rectColor = opts.rectColor ? new cv.Vec(opts.rectColor.b, opts.rectColor.g, opts.rectColor.r) : rectColor; // blue, green, red
     rectLineThickness = opts.rectLineThickness ? opts.rectLineThickness : rectLineThickness;
     rectLineType = opts.rectLineType ? opts.rectLineType : rectLineType;
+    if (opts.rectanglesOnly) {
+      rectanglesOnly = opts.rectanglesOnly;
+      outputFileType = '.png';
+      if (opts.rectanglesOnlyBorder &&  opts.rectanglesOnlyBorder.length === 3) {
+        rectanglesOnlyBorder = opts.rectanglesOnlyBorder;
+      }
+      rectColor = new cv.Vec(rectanglesOnlyBorder[0], rectanglesOnlyBorder[1], rectanglesOnlyBorder[2]);
+    }
   },
   detect: (img) => {
     let image = cv.imdecode(img);
@@ -47,12 +57,17 @@ module.exports = {
 
     // apply non-maxima suppression
     const pick = nms(foundLocations, overlapThresh)
-
+    if (rectanglesOnly) {
+      image = new cv.Mat(image.sizes[0], image.sizes[1], cv.CV_8UC4, [0,0,0,255]);
+    }
     if (pick) {
       for (let i = 0; i < pick.length; i++) {
         // draw the rect for the object
         const { x1, y1, width, height } = pick[i];
-        image.drawRectangle(new cv.Rect(x1, y1, width, height), rectColor, rectLineThickness, rectLineType);
+        image.drawRectangle(new cv.Rect(x1, y1, width, height), rectColor, rectLineThickness);
+      }
+      if (rectanglesOnly) {
+        image = image.bitwiseNot();
       }
     }
     // cv.imshow('pedestrian', image); // debugging

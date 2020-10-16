@@ -55,6 +55,16 @@ const result = pedestrianDetect.detect(image);
 ```
 See test2.js for a simple example of passing options.
 
+## rectangle only mode
+Outputs a png image that is the same dimensions as input image and is entirely transparent except for where rectangles are drawn.
+```
+const rectangleOnlyOptions = {
+  rectanglesOnly: true,
+  rectanglesOnlyBorder: [0, 255, 255] // when bitwiseNot, this is blue
+};
+pedestrianDetect.optionalInit(rectangleOnlyOptions);
+```
+
 ## other
 Inspired by https://www.pyimagesearch.com/2015/11/09/pedestrian-detection-opencv/
 pedestrian-detect.js is based on pedestrian-detect.py
