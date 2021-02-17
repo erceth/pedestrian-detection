@@ -1,10 +1,6 @@
 /*
 find new way to point to openCV
 */
-// LEFT OFF: Create flags for options and create documentation on them. test on pi. publish on websites
-
-// https://www.pyimagesearch.com/2015/11/16/hog-detectmultiscale-parameters-explained/
-// LEFT OFF: clean up, pass in options, publish
 
 const cv = require('opencv4nodejs');
 const nms = require('@erceth/non-maximum-suppression');
@@ -74,7 +70,8 @@ module.exports = {
     // cv.waitKey();
     return {
       time: end,
-      img: cv.imencode(outputFileType, image)
+      img: cv.imencode(outputFileType, image),
+      found: pick.length
     };
   }
 }

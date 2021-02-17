@@ -55,6 +55,16 @@ const result = pedestrianDetect.detect(image);
 ```
 See test2.js for a simple example of passing options.
 
+## results
+The detect function returns a object
+```
+{
+  img: <image>, // the image, with rectangles of anything detected.
+  time: <number>, // milliseconds of how long the detection took. Useful in tuning performance.
+  found: <number> // number of pedestrians detected. Matches the number of rectangles on img.
+}
+```
+
 ## rectangle only mode
 Outputs a png image that is the same dimensions as input image and is entirely transparent except for where rectangles are drawn.
 ```
