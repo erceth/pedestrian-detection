@@ -21,6 +21,7 @@ let outputFileType = '.jpg';
 let rectanglesOnly = false;
 let rectanglesOnlyBorder = [255, 0, 255]; // when bitwiseNot, this is green
 
+let originalWidth = resizeOutput;
 module.exports = {
   optionalInit: (opts) => {
     // override defaults
@@ -44,6 +45,7 @@ module.exports = {
   detect: (img) => {
     let image = cv.imdecode(img);
     if (resizeOutput > 0) {
+      originalWidth = image.sizes[1];
       image = image.resizeToMax(resizeOutput);
     }
     
@@ -64,6 +66,9 @@ module.exports = {
       }
       if (rectanglesOnly) {
         image = image.bitwiseNot();
+      }
+      if (resizeOutput > 0) {
+        image = image.resizeToMax(originalWidth);
       }
     }
     // cv.imshow('pedestrian', image); // debugging
