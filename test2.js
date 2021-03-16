@@ -23,8 +23,8 @@ const pedOptions = {
 
 pedestrianDetect.optionalInit(pedOptions);
 
-request.get(camConfig.url, requestOptions, (error, options, body) => {
-  const result = pedestrianDetect.detect(body)
+request.get(camConfig.url, requestOptions, async (error, options, body) => {
+  const result = await pedestrianDetect.detect(body)
   console.log(result)
   fs.writeFileSync(`results/result${pedOptions.outputFileType}`, result.img);
   console.log(`check: ./result${pedOptions.outputFileType}`)

@@ -1,7 +1,3 @@
-/*
-find new way to point to openCV
-*/
-
 const cv = require('opencv4nodejs');
 const nms = require('@erceth/non-maximum-suppression');
 
@@ -9,6 +5,7 @@ const hog = new cv.HOGDescriptor();
 hog.setSVMDetector(cv.HOGDescriptor.getDefaultPeopleDetector())
 
 // defaults
+let hitThreshold = 0;
 let winStride = new cv.Size(4, 4);
 let padding = new cv.Size(8, 8);
 let scale = 1.05;
@@ -25,6 +22,7 @@ let originalWidth = resizeOutput;
 module.exports = {
   optionalInit: (opts) => {
     // override defaults
+    hitThreshold = opts.hitThreshold ? opts.hitThreshold : hitThreshold;
     winStride = opts.winStride ? new cv.Size(opts.winStride.width, opts.winStride.height) : winStride;
     padding = opts.padding ? new cv.Size(opts.padding.width, opts.padding.height) : padding;
     scale = opts.scale ? opts.scale : scale;
@@ -42,7 +40,7 @@ module.exports = {
       rectColor = new cv.Vec(rectanglesOnlyBorder[0], rectanglesOnlyBorder[1], rectanglesOnlyBorder[2]);
     }
   },
-  detect: (img) => {
+  detect: async (img) => {
     let image = cv.imdecode(img);
     if (resizeOutput > 0) {
       originalWidth = image.sizes[1];
@@ -50,7 +48,7 @@ module.exports = {
     }
     
     const start = process.hrtime();
-    const { foundLocations, locationsWeights } = hog.detectMultiScale(image, 0, winStride, padding, scale);
+    const { foundLocations, locationsWeights } = await hog.detectMultiScaleAsync(image, hitThreshold, winStride, padding, scale);
     const end = process.hrtime(start);
 
     // apply non-maxima suppression

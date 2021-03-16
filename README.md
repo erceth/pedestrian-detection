@@ -36,6 +36,7 @@ const fullyLoadedOptions = {
   rectLineThickness: 2, // pixels,
   rectLineType: require('opencv4nodejs').LINE_8,
   outputFileType: '.jpg',
+  hitThreshold: 0,
   winStride: {
     width: 4,
     height: 4
@@ -50,13 +51,22 @@ const fullyLoadedOptions = {
 
 pedestrianDetect.optionalInit(fullyLoadedOptions);
 ...
-const result = pedestrianDetect.detect(image);
+const result = await pedestrianDetect.detect(image);
 ...
 ```
+
+### option explanation 
+
+hitThreshold: Threshold for the distance between features and SVM classifying plane. Helpful for extremely high rate of false-positive detections.
+winStride: How quickly searching window parses an image. Lower number means high CPU intensive and more accurate. Higher number means less CPU intensive but less accurate. Min value of 1.
+padding: the number of pixels in both the x and y direction in which the sliding window ROI is “padded” prior to HOG feature extraction. Typical values for padding include (8, 8), (16, 16), (24, 24), and (32, 32)
+scale: Controls the resize factor while process is repeatedly resizing image to find pedestrians. Smaller results in more resizes, more accurate and more CPU usage. Lower is less resizes, less accurate and less CPU usage. Minimum is 1.01.
+overlapThresh: Used for non-maximum suppression, corrects for multiple detection of the same pedestrian. Amount of overlap per detection before counting it as a single detection.
+
 See test2.js for a simple example of passing options.
 
 ## results
-The detect function returns a object
+The detect function returns a promise that resolves to an object
 ```
 {
   img: <image>, // the image, with rectangles of anything detected.
